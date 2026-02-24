@@ -81,7 +81,7 @@ def ejecutar_simulacion():
         time.sleep(0.5) # Pausa para ver la secuencia
 
         # 1. MOVIMIENTO DEL GATO (Minimiza Manhattan)
-        mejor_puntuacion = float('inf')
+        mejor_puntuacion = float('inf') #Inicializamos el mejor valor con un numero muy alto
         proximo_paso_gato = juego.gato
         for mov in obtener_movimientos(juego.gato):
             puntos = minimax(mov, juego.raton, PROFUNDIDAD_MINIMAX, True)
@@ -89,14 +89,14 @@ def ejecutar_simulacion():
                 mejor_puntuacion = puntos
                 proximo_paso_gato = mov
         juego.gato = proximo_paso_gato
-
+        #Si el gato atrapa el raton el juego termina
         if juego.gato == juego.raton:
             juego.dibujar(turno)
             print("¡EL GATO HA ALMORZADO! Game Over para el ratón.")
             return
 
         # 2. MOVIMIENTO DEL RATÓN (Maximiza Manhattan)
-        mejor_puntuacion = -float('inf')
+        mejor_puntuacion = -float('inf')        #Inicializamos mejor valor con un numero muy bajo
         proximo_paso_raton = juego.raton
         for mov in obtener_movimientos(juego.raton):
             puntos = minimax(juego.gato, mov, PROFUNDIDAD_MINIMAX, False)

@@ -2,10 +2,11 @@ import random
 import time
 import os
 
-# --- CONFIGURACIÓN ---
+#Constante a utilizar
 DIM = 5  # Dimension de mi Matriz 5x5
 PROFUNDIDAD_MINIMAX = 3 # Cuántos pasos a futuro ven los agentes
 
+#Creamos la Clase en donde encapsulamos el el tablero y personajes
 class JuegoPersecucion:
     def __init__(self):
         self.ancho = DIM
@@ -63,14 +64,14 @@ def minimax(pos_gato, pos_raton, profundidad, es_maximizador):
     if es_maximizador: # Turno del Ratón (Maximiza distancia)
         mejor_valor = -float('inf')       #Se usa para inicializar
         for mov in obtener_movimientos(pos_raton):
-            valor = minimax(pos_gato, mov, profundidad - 1, False)
-            mejor_valor = max(mejor_valor, valor)
+            valor = minimax(pos_gato, mov, profundidad - 1, False) #Funcion recursiva, simulamos el movimiento del gato, bajamos prof. y cambiamos turno
+            mejor_valor = max(mejor_valor, valor)   #comparamos y elegimos el valor maximo
         return mejor_valor
     else: # Turno del Gato (Minimiza distancia)
         mejor_valor = float('inf')      #Se usa para inicializar
         for mov in obtener_movimientos(pos_gato):
-            valor = minimax(mov, pos_raton, profundidad - 1, True)
-            mejor_valor = min(mejor_valor, valor)
+            valor = minimax(mov, pos_raton, profundidad - 1, True) #Funcion recursiva, simulamos el movimiento del raton, bajamos prof. y cambiamos turno
+            mejor_valor = min(mejor_valor, valor)       #Comparamos y elegimos el valor minimo
         return mejor_valor
 
 def ejecutar_simulacion():
@@ -82,13 +83,13 @@ def ejecutar_simulacion():
 
         # 1. MOVIMIENTO DEL GATO (Minimiza Manhattan)
         mejor_puntuacion = float('inf') #Inicializamos el mejor valor con un numero muy alto
-        proximo_paso_gato = juego.gato
+        proximo_paso_gato = juego.gato  #El gato ejecuta el mejor movimiento encontrado
         for mov in obtener_movimientos(juego.gato):
             puntos = minimax(mov, juego.raton, PROFUNDIDAD_MINIMAX, True)
             if puntos < mejor_puntuacion:
                 mejor_puntuacion = puntos
                 proximo_paso_gato = mov
-        juego.gato = proximo_paso_gato
+        juego.gato = proximo_paso_gato      #El gato ejecuta el mejor movimiento encontrado.
         #Si el gato atrapa el raton el juego termina
         if juego.gato == juego.raton:
             juego.dibujar(turno)
@@ -97,7 +98,7 @@ def ejecutar_simulacion():
 
         # 2. MOVIMIENTO DEL RATÓN (Maximiza Manhattan)
         mejor_puntuacion = -float('inf')        #Inicializamos mejor valor con un numero muy bajo
-        proximo_paso_raton = juego.raton
+        proximo_paso_raton = juego.raton        #El raton ejecuta el mejor movimiento encontrado
         for mov in obtener_movimientos(juego.raton):
             puntos = minimax(juego.gato, mov, PROFUNDIDAD_MINIMAX, False)
             if puntos > mejor_puntuacion:

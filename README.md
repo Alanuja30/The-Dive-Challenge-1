@@ -80,6 +80,5 @@ Posibles Mejoras Futuras
 - Interfaz interactiva para que el usuario juegue.
 - Métricas de rendimiento y análisis de tiempo de ejecución.
 
-👨‍💻 Autor
-
-Alan Nunez
+Autor
+Alan Nuñez Jara
